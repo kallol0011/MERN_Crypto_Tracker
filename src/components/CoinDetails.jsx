@@ -32,6 +32,7 @@ const CoinDetails = () => {
   const [currency, setCurrency] = useState("inr");
   const [days, setDays] = useState("24h");
   const [chartArray, setChartArray] = useState([]);
+  const [add,setadd]=useState(false)
 
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
@@ -98,6 +99,46 @@ const CoinDetails = () => {
     };
     fetchCoin();
   }, [params.id, currency, days]);
+
+  console.log(coin.name)
+  console.log(coin.symbol)
+  // console.log(coin?.market_data?.current_price?.usd,typeof(coin?.market_data?.current_price?.usd))
+
+  const CoinArr=JSON.parse(localStorage.getItem("CoinName")) || []
+
+   const WishListFunction=(coinname,image,price)=>{
+    console.log("price",price)
+    // console.log("Price..",coin?.market_data?.current_price?.usd)
+    var coinPrice=coin?.market_data?.current_price?.usd;
+    var symbol=coin?.symbol;
+    var check=CoinArr.map((el)=>{
+      return el.coinname===coinname
+      
+    })
+console.log(check[check.length-1])
+    if(check[check.length-1]===true)
+    {
+      return;
+    }
+    let coinobj={
+      id:Math.random()+Date.now(),
+      coinname:coinname,
+      image:image,
+      price:coinPrice,
+      name:symbol
+    }
+    console.log(coinobj)
+    CoinArr.push(coinobj)
+    localStorage.setItem("CoinName",JSON.stringify(CoinArr))
+    setadd(true)
+  }
+
+   const RemoveFunction=(coinname,image)=>{
+    
+    setadd(false)
+  }
+// console.log(coin.market_data.current_price.inr)
+  // localStorage.clear()
 
   if (error) return <ErrorComponent message={"Error While Fetching Coin"} />;
 
@@ -172,6 +213,7 @@ const CoinDetails = () => {
             >{`#${coin.market_cap_rank}`}</Badge>
 
             <CustomBar
+            
               high={`${currencySymbol}${coin.market_data.high_24h[currency]}`}
               low={`${currencySymbol}${coin.market_data.low_24h[currency]}`}
             />
@@ -196,6 +238,21 @@ const CoinDetails = () => {
               />
             </Box>
           </VStack>
+         
+           <Box mb={"7vh"} >
+          {
+             add === false ? 
+            
+           (<Button width={"72vw"} bg={"rgb(49,151,149)"} onClick={()=>WishListFunction(params.id,coin.image.large)} >
+            Add In Wishlist
+           </Button>)
+           : (<Button width={"72vw"} bg={"red.400"} onClick={()=>RemoveFunction(params.id,coin.image.large,coin?.market_data?.current_price.usd)} >
+            Remove from Wishlist
+           </Button>)
+
+          }
+            
+         </Box>
         </>
       )}
     </Container>

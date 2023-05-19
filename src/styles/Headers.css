@@ -1,0 +1,4 @@
+.NavBox{
+    display: grid;
+    grid-template-columns: 16% 62% 19%;
+}

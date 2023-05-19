@@ -1,0 +1,14 @@
+.watchlist{
+    display: grid;
+    /* grid-template-columns: 18% 39% 45%; */
+    grid-template-columns: 11% 21% 65%;
+    justify-content: space-around;
+    /* align-items: center; */
+    gap: 3px;
+    
+}
+
+.watchlist:hover{
+    background-color: rgb(160, 174, 192);
+    
+}

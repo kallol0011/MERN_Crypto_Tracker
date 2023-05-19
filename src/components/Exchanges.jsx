@@ -4,7 +4,7 @@ import axios from "axios"
 import {server} from "../index"
 import { useState } from 'react';
 import Loder from "./Loader"
-import { Container, HStack } from '@chakra-ui/react';
+import { Container, HStack, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import ExchangeCard from './ExchangeCard';
 import ErrorCard from "./ErrorComponent";
 import Footer from './Footer';
@@ -13,6 +13,10 @@ const Exchanges = () => {
 const [exchanges,setExchanges]=useState([])
 const [loading,setLoding]=useState(true)
 const [error , setError]=useState(false)
+
+const { colorMode, toggleColorMode } = useColorMode();
+
+// const theme =useColorModeValue("gray.100", "gray.900")
 
     useEffect(()=>{
 
@@ -45,7 +49,7 @@ const [error , setError]=useState(false)
     }
 
     return (
-        <Container maxW={"container.xl"} >
+        <Container maxW={"container.xl"}   >
             {
                 loading? <Loder/> :
                 
